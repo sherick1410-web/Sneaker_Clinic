@@ -2,14 +2,14 @@ import { getConnection } from '../config/Connection.js';
 import sql from 'mssql';
 
 const getAlluser = async () => {
-  const pool = await getConnection;
+  const pool = await getConnection();
   const result = await pool.request().execute('listar_username');
   return result.recordset;
 };
 
 const addUsername = async (username_) => {
   const { name_, name_2, lastname_, lastname_2, document, telephone, username, password } = username_;
-  const con = await getConnection;
+  const con = await getConnection();
   await con.request()
     .input('name_', sql.VarChar(30), name_)
     .input('name_2', sql.VarChar(30), name_2)
@@ -24,7 +24,7 @@ const addUsername = async (username_) => {
 
 const deleteusername = async (username) => {
   const { document } = username;
-  const con = await getConnection;
+  const con = await getConnection();
   await con.request()
     .input('document', sql.BigInt, document)
     .execute('eliminar_Username');
@@ -42,7 +42,7 @@ const updateUsername = async (document, datos) => {
     username
   } = datos;
 
-  const con = await getConnection;
+  const con = await getConnection();
   await con.request()
     .input('document', sql.BigInt, document)
     .input('name_', sql.VarChar(30), name_)
